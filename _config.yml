@@ -1,0 +1,33 @@
+permalink: /:year/:month/:day/:title.html
+markdown: kramdown
+pygments: true
+
+kramdown:
+  input: GFM
+
+# 作者信息
+author: 
+  name: DW
+  email: dengwei.cs@gmail.com
+  link: 
+  weibo: 
+  github: http://github.com/deweing
+
+# 站点信息
+title: DW's Blog
+description: DW's Blog
+url: http://github.com/deweing
+rss_url: /pages/atom.xml
+
+# avatar头像及Favicon
+avatar: https://avatars1.githubusercontent.com/u/2382711
+favicon: https://avatars1.githubusercontent.com/u/2382711
+
+# google analytics 设置
+#ga:
+#  id: 
+#  url: 
+
+# disqus 设置
+#disqus:
+#  shortname: 
