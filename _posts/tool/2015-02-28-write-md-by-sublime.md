@@ -32,8 +32,8 @@ Markdown Preview常用的功能是`preview in browser`和`Export HTML in Sublime
 
 ```
 {
-	"enable_mathjax": ture,
-	"enable_highlight": ture
+	"enable_mathjax": true,
+	"enable_highlight": true
 }
 ```
 
