@@ -119,7 +119,7 @@ description:                                   #自定义常量
 本地预览自己的修改很容易，只要进入`username.github.io`目录，执行
 
 ```
-$ jekyll serve
+$ jekyll serve -H 0.0.0.0
 ```
 
 然后访问`http://localhost:4000`就OK了
