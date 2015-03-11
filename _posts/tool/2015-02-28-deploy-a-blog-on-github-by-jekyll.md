@@ -122,7 +122,11 @@ description:                                   #自定义常量
 $ jekyll serve -H 0.0.0.0
 ```
 
-然后访问`http://localhost:4000`就OK了
+然后访问`http://localhost:4000`就OK了，如果想脱离终端在后台运行，加参数`--detach`
+
+```
+$ jekyll serve --detach -H 0.0.0.0
+```
 
 自己预览过没有问题以后，就提交到服务端吧，Git三步走
 
