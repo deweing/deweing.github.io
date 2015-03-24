@@ -1,11 +1,13 @@
 ---
 layout: post
-title: Mysql复制表+主键(表结构、索引和主键、数据)
+title: Mysql复制表(表结构、索引、数据)
 category: 技术
 tags: MySQL
 keywords: MySQL
 description:
 ---
+
+Mysql复制表+主键(表结构、索引和主键、数据)
 
 mysql> create table test_users like users;
 复制表结构和索引到test_users (新表:test_users 原表:users)
