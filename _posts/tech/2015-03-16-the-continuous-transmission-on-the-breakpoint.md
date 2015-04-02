@@ -2,8 +2,8 @@
 layout: post
 title: 判断服务器是否支持断点续传
 category: 技术
-tags: Linux
-keywords: Linux
+tags: linux
+keywords: linux
 description:
 ---
 

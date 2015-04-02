@@ -2,8 +2,8 @@
 layout: post
 title: 原生JS实现AJAX
 category: 技术
-tags: JavaScript,Ajax
-keywords: JavaScript,Ajax
+tags: javascript,ajax
+keywords: javascript,ajax
 description:
 ---
 

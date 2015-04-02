@@ -2,8 +2,8 @@
 layout: post
 title: 用South重命名数据表名
 category: 技术
-tags: Python
-keywords: Python,South
+tags: python
+keywords: python,south
 description:
 ---
 

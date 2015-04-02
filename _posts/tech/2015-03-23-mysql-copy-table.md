@@ -2,8 +2,8 @@
 layout: post
 title: Mysql复制表(表结构、索引、数据)
 category: 技术
-tags: MySQL
-keywords: MySQL
+tags: mysql
+keywords: mysql
 description:
 ---
 

@@ -2,8 +2,8 @@
 layout: post
 title: 使用Virtualenv搭建独立的Python环境
 category: 技术
-tags: Python
-keywords: Python,Virtualenv
+tags: python
+keywords: python,virtualenv
 description:
 ---
 

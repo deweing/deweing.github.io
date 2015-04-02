@@ -2,8 +2,8 @@
 layout: post
 title: 将Sublime打造成Markdown编辑器
 category: 工具
-tags: Sublime
-keywords: Sublime,Markdown
+tags: sublime
+keywords: sublime,markdown
 description:
 ---
 
