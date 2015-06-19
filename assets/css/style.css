@@ -1243,3 +1243,16 @@ pre > code {
   color: #2aa198; }
 
 /* Literal.Number.Integer.Long */
+
+
+.table_border {
+    border:1px solid silver;
+    border-collapse:collapse;
+    word-break:break-word
+}
+
+.table_border td {
+    border:1px solid silver;
+    border-collapse:collapse;
+    word-break:break-word
+}
