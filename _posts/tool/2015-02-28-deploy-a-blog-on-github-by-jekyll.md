@@ -17,7 +17,7 @@ $ jekyll new username.github.io
 $ cd username.github.io
 ```
 
-###目录结构图
+### 目录结构图
 
 ```
 ├── CNAME
