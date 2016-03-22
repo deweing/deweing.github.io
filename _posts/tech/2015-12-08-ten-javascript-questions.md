@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 10道javascript笔试题
+title: 十个JavaScript问题
 category: 技术
 tags: javascript
 keywords: javascript
