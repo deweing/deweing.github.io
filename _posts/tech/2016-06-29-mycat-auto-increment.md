@@ -85,7 +85,7 @@ DELIMITER ;
 -- 获取下一个sequence值  
 DROP FUNCTION IF EXISTS mycat_seq_nextval;  
 DELIMITER $  
-CREATE FUNCTION mycat_seq_nextval(seq_name VARCHAR(50)) RETURNS varchar(64 CHARSET utf8  
+CREATE FUNCTION mycat_seq_nextval(seq_name VARCHAR(50)) RETURNS varchar(64) CHARSET utf8  
 DETERMINISTIC  
 BEGIN  
 UPDATE MYCAT_SEQUENCE  
