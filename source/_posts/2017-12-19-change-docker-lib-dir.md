@@ -9,7 +9,7 @@ description:
 
 在默认情况下，Docker镜像和容器的默认存放位置为:/var/lib/docker
 
-# 方法一：挂载新分区到//var/lib/docker目录下
+# 方法一：挂载新分区到/ var/lib/docker目录下
 
 ### 1.创建新分区
 ```
@@ -55,6 +55,7 @@ docker ps -a
 ```
 
 # 方法二：修改容器和镜像的存储位置
+
 在Docker服务配置文件/etc/sysconfig/docker中修改镜像和容器存放路径的参数， 在配置文件中加入：
 
 ```
