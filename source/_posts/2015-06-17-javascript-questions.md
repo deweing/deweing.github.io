@@ -2,7 +2,7 @@
 layout: post
 title: 一道经典的JavaScript试题
 category: 技术
-tags: Javascript
+tags: javascript
 keywords: js
 description:
 ---

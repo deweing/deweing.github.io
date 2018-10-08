@@ -2,9 +2,9 @@
 layout: post
 title: Git 常用资源
 category: 资源
-tags: Git
-keywords: Git
-description: 
+tags: git
+keywords: git
+description:
 ---
 
 ## 历史管理
@@ -15,10 +15,10 @@ description:
     git show xxxx // 查看某次修改
 
 ### 标签功能
-    
+
     git tag // 显示所有标签
     git tag -l 'v1.4.2.*' // 显示 1.4.2 开头标签
-    git tag v1.3 // 简单打标签   
+    git tag v1.3 // 简单打标签
     git tag -a v1.2 9fceb02 // 后期加注标签
     git tag -a v1.4 -m 'my version 1.4' // 增加标签并注释， -a 为 annotated 缩写
     git show v1.4 // 查看某一标签详情
@@ -41,13 +41,13 @@ description:
     git mv <sourcefile> <destfile>
 
 ### 查看文件更新
-    git diff              查看未暂存的文件更新 
-    git diff --cached     查看已暂存文件的更新 
+    git diff              查看未暂存的文件更新
+    git diff --cached     查看已暂存文件的更新
 
 ## 分支管理
 
 ### 创建分支
-    
+
     git branch develop // 只创建分支
     git checkout -b master develop // 创建并切换到 develop 分支
 
@@ -80,7 +80,7 @@ description:
     git clone https://github.com/chaconinc/MainProject
     git submodule init
     git submodule update
-    
+
 ## Git设置
 
 Git的全局设置在`~/.gitconfig`中，单独设置在`project/.git/config`下。

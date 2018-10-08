@@ -1,9 +1,9 @@
 ---
 layout: post
 title: 修改Docker存储位置
-category: Docker
-tags: Docker
-keywords: Docker
+category: docker
+tags: docker
+keywords: docker
 description:
 ---
 
@@ -30,7 +30,7 @@ cp -r /var/lib/docker/* /mnt/docker
 ### 3.挂载新分区到/var/lib/docker
 ```
 #备份原目录
-mv /var/lib/docker{,.bak} 
+mv /var/lib/docker{,.bak}
 #创建新目录
 mkdir /var/lib/docker
 

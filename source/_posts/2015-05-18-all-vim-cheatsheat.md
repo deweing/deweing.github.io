@@ -3,7 +3,7 @@ layout: post
 title: 史上最全Vim快捷键键位图 -- 入门到进阶
 modified:
 categories: 工具
-tags: linux,vim
+tags: [linux,vim]
 keywords: vim
 image:
 date: 2015-05-18T22:49:00-07:00

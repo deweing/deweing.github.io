@@ -2,8 +2,8 @@
 layout: post
 title: 在Github上搭建Jekyll博客
 category: 工具
-tags: Jekyll
-keywords: Jekyll,Github
+tags: jekyll
+keywords: jekyll,github
 description:
 ---
 

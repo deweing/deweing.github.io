@@ -2,8 +2,8 @@
 layout: post
 title: 原生JS实现AJAX
 category: 技术
-tags: javascript,ajax
-keywords: javascript,ajax
+tags: [javascript,ajax]
+keywords: [javascript,ajax]
 description:
 ---
 
@@ -43,17 +43,17 @@ function ajax(options) {
 
     //接收 - 第三步
     xhr.onreadystatechange = function() {
-        // readyState值说明  
-        // 0,初始化,XHR对象已经创建,还未执行open  
-        // 1,载入,已经调用open方法,但是还没发送请求  
-        // 2,载入完成,请求已经发送完成  
-        // 3,交互,可以接收到部分数据  
+        // readyState值说明
+        // 0,初始化,XHR对象已经创建,还未执行open
+        // 1,载入,已经调用open方法,但是还没发送请求
+        // 2,载入完成,请求已经发送完成
+        // 3,交互,可以接收到部分数据
         // 4,完成
-  
-        // status值说明  
-        // 200:成功  
-        // 404:没有发现文件、查询或URl  
-        // 500:服务器产生内部错误  
+
+        // status值说明
+        // 200:成功
+        // 404:没有发现文件、查询或URl
+        // 500:服务器产生内部错误
         if (xhr.readyState == 4) {
             var status = xhr.status;
             if (status >= 200 && status < 300) {

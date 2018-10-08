@@ -2,9 +2,9 @@
 layout: post
 title: 网络上分享的一些资源
 category: 资源
-tags: Share
-keywords: Share
-description: 
+tags: share
+keywords: share
+description:
 ---
 
 网络上分享的一些资源：

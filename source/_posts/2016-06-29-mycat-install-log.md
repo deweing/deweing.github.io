@@ -2,21 +2,21 @@
 layout: post
 title: Mycat安装配置记录
 category: 技术
-tags: mysql,mycat
+tags: [mysql,mycat]
 keywords: mycat
 description:
 ---
 
-### 1.安装JDK  
-注：JDK7或者更高版本  
+### 1.安装JDK
+注：JDK7或者更高版本
 
-### 2.安装MySQL  
-MYCAT支持多种数据库，如：MySQL、SQLServer、Oracle、MongoDB  
+### 2.安装MySQL
+MYCAT支持多种数据库，如：MySQL、SQLServer、Oracle、MongoDB
 **注意**：Linux下部署安装MySQL，默认不忽略表名大小写，需要修改my.cnf配置：`lower_case_table_names=1` 忽略表名大小写，否则MyCat会提示找不到表的错误！
 
-### 3.安装MyCat  
-下载地址：[https://github.com/MyCATApache/Mycat-download](https://github.com/MyCATApache/Mycat-download)  
-将Mycat-server-xxxxx.linux.tar.gz解压到指定的目录下，目录不能有空格，linux下，建议放在usr/local/Mycat目录下     
+### 3.安装MyCat
+下载地址：[https://github.com/MyCATApache/Mycat-download](https://github.com/MyCATApache/Mycat-download)
+将Mycat-server-xxxxx.linux.tar.gz解压到指定的目录下，目录不能有空格，linux下，建议放在usr/local/Mycat目录下
 
 ```sh
 useradd Mycat
