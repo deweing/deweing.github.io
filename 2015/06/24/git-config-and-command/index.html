@@ -1,0 +1,726 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="git" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Git配置12345678git config --global user.name &amp;quot;hunng&amp;quot;git config --global user.email &amp;quot;huangthink@gmail.com&amp;quot;git config --global color.ui truegit config --global alias.co checkoutgit con">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git配置和常用命令">
+<meta property="og:url" content="http://deweing.github.io/2015/06/24/git-config-and-command/index.html">
+<meta property="og:site_name" content="Hello World">
+<meta property="og:description" content="Git配置12345678git config --global user.name &amp;quot;hunng&amp;quot;git config --global user.email &amp;quot;huangthink@gmail.com&amp;quot;git config --global color.ui truegit config --global alias.co checkoutgit con">
+<meta property="og:updated_time" content="2018-10-08T03:46:21.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git配置和常用命令">
+<meta name="twitter:description" content="Git配置12345678git config --global user.name &amp;quot;hunng&amp;quot;git config --global user.email &amp;quot;huangthink@gmail.com&amp;quot;git config --global color.ui truegit config --global alias.co checkoutgit con">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://deweing.github.io/2015/06/24/git-config-and-command/"/>
+
+
+
+
+
+  <title> Git配置和常用命令 | Hello World </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello World</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://deweing.github.io/2015/06/24/git-config-and-command/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DW">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/2382711">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Git配置和常用命令
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-06-24T16:00:00+00:00">
+                2015-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Git配置"><a href="#Git配置" class="headerlink" title="Git配置"></a>Git配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;hunng&quot;</div><div class="line">git config --global user.email &quot;huangthink@gmail.com&quot;</div><div class="line">git config --global color.ui true</div><div class="line">git config --global alias.co checkout</div><div class="line">git config --global alias.ci commit</div><div class="line">git config --global alias.st status</div><div class="line">git config --global alias.br branch</div><div class="line">git config -l  # 列举所有配置</div></pre></td></tr></table></figure>
+<p>用户的git配置文件在~/.gitconfig，我的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">cat .gitconfig</div><div class="line">[user]</div><div class="line">    email = huangthink@gmail.com</div><div class="line">    name = hunng</div><div class="line">[color]</div><div class="line">    ui = auto</div><div class="line">[color &quot;branch&quot;]</div><div class="line">    current = yellow reverse</div><div class="line">    local = yellow</div><div class="line">    remote = green</div><div class="line">[color &quot;diff&quot;]</div><div class="line">    meta = yellow bold</div><div class="line">    frag = magenta bold</div><div class="line">    old = red bold</div><div class="line">    new = green bold</div><div class="line">[color &quot;status&quot;]</div><div class="line">    added = yellow</div><div class="line">    changed = green</div><div class="line">    untracked = cyan</div><div class="line">[alias]</div><div class="line">    st = &quot;status&quot;</div><div class="line">    co = checkout</div><div class="line">    ls = &quot;ls-files&quot;</div><div class="line">    ci = commit</div><div class="line">    br = branch</div><div class="line">    rt = reset --hard</div><div class="line">    unstage = reset HEAD</div><div class="line">    uncommit = reset --soft HEAD^</div><div class="line">    l = log --pretty=oneline --abbrev-commit --graph --decorate</div><div class="line">   amend = commit --amend</div><div class="line">   who = shortlog -n -s --no-merges</div><div class="line">    g = grep -n --color -E</div><div class="line">    cp = cherry-pick -x</div><div class="line">    cb = checkout -b</div><div class="line">[core]</div><div class="line">    filemode = true</div></pre></td></tr></table></figure>
+<h3 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h3><p>查看、帮助命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git help &lt;command&gt;  # 显示command的help</div><div class="line">git show            # 显示某次提交的内容</div><div class="line">git show $id</div></pre></td></tr></table></figure>
+<p>查看提交记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">git log</div><div class="line">git log &lt;file&gt;      # 查看该文件每次提交记录</div><div class="line">git log -p &lt;file&gt;   # 显示版本历史，以及版本间的内容差异</div><div class="line">git log -p -2       # 查看最近两次详细修改内容的diff</div><div class="line">git log --stat      # 查看提交统计信息</div><div class="line">git log --since=&quot;6 hours&quot;  # 显示最近6小时提交</div><div class="line">git log --before=&quot;2 days&quot;  # 显示2天前提交</div><div class="line">git log -1 HEAD~3          # 显示比HEAD早3个提交的那个提交</div><div class="line">git log -1 HEAD^^^</div><div class="line">git reflog                 # 查看操作记录</div></pre></td></tr></table></figure>
+<p>添加、提交、删除、找回，重置修改文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">git co  -- &lt;file&gt;   # 抛弃工作区修改</div><div class="line">git co  .           # 抛弃工作区修改</div><div class="line">git co HEAD &lt;file&gt;  # 抛弃工作目录区中文件的修改</div><div class="line"></div><div class="line">git add &lt;file&gt;      # 将工作文件修改提交到本地暂存区</div><div class="line">git add .           # 将所有修改过的工作文件提交暂存区</div><div class="line"></div><div class="line">git rm &lt;file&gt;       # 从版本库中删除文件</div><div class="line">git rm &lt;file&gt; --cached  # 从版本库中删除文件，但不删除文件</div><div class="line"></div><div class="line">git reset &lt;file&gt;    # 从暂存区恢复到工作文件</div><div class="line">git reset -- .      # 从暂存区恢复到工作文件</div><div class="line">git reset --hard  HEAD^ # 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改</div><div class="line">git reset --hard &lt;commit id&gt;  # 恢复到某一次提交的状态</div><div class="line">git reset HEAD &lt;file&gt; # 抛弃暂存区中文件的修改</div><div class="line"></div><div class="line">git ci &lt;file&gt;</div><div class="line">git ci .</div><div class="line">git ci -a           # 将git add, git rm和git ci等操作都合并在一起做</div><div class="line">git ci -am &quot;some comments&quot;</div><div class="line">git ci --amend      # 修改最后一次提交记录</div><div class="line"></div><div class="line">git revert &lt;$id&gt;    # 恢复某次提交的状态，恢复动作本身也创建了一次提交对象</div><div class="line">git revert HEAD     # 恢复最后一次提交的状态</div></pre></td></tr></table></figure>
+<p>查看文件diff</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git diff &lt;file&gt;     # 比较当前文件和暂存区文件差异</div><div class="line">git diff</div><div class="line">git diff &lt;$id1&gt; &lt;$id2&gt;      # 比较两次提交之间的差异</div><div class="line">git diff &lt;branch1&gt;..&lt;branch2&gt;   # 在两个分支之间比较</div><div class="line">git diff --staged   # 比较暂存区和版本库差异</div><div class="line">git diff --cached   # 比较暂存区和版本库差异</div><div class="line">git diff --stat     # 仅仅比较统计信息</div></pre></td></tr></table></figure>
+<h3 id="Git-本地分支管理"><a href="#Git-本地分支管理" class="headerlink" title="Git 本地分支管理"></a>Git 本地分支管理</h3><p>查看、切换、创建和删除分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">git br -r           # 查看远程分支</div><div class="line">git br -v           # 查看各个分支最后提交信息</div><div class="line">git br -a           # 列出所有分支</div><div class="line">git br --merged     # 查看已经被合并到当前分支的分支</div><div class="line">git br --no-merged  # 查看尚未被合并到当前分支的分支</div><div class="line">git br &lt;new_branch&gt; # 基于当前分支创建新的分支</div><div class="line">git br &lt;new_branch&gt;  &lt;start_point&gt;      # 基于另一个起点（分支名称，提交名称或则标签名称），创建新的分支</div><div class="line">git br -f &lt;existing_branch&gt;  &lt;start_point&gt; # 创建同名新分支，覆盖已有分支</div><div class="line">git br -d &lt;branch&gt;  # 删除某个分支</div><div class="line">git br -D &lt;branch&gt;  # 强制删除某个分支 (未被合并的分支被删除的时候需要强制)</div><div class="line"></div><div class="line">git co &lt;branch&gt;         # 切换到某个分支</div><div class="line">git co -b &lt;new_branch&gt;  # 创建新的分支，并且切换过去</div><div class="line">git co -b &lt;new_branch&gt; &lt;branch&gt;       # 基于branch创建新的new_branch</div><div class="line">git co -m &lt;existing_branch&gt; &lt;new_branch&gt;  # 移动或重命名分支，当新分支不存在时</div><div class="line">git co -M &lt;existing_branch&gt; &lt;new_branch&gt;  # 移动或重命名分支，当新分支存在时就覆盖</div><div class="line"></div><div class="line">git co $id               # 把某次历史提交记录checkout出来，但无分支信息，切换到其他分支会自动删除</div><div class="line">git co $id -b &lt;new_branch&gt;       # 把某次历史提交记录checkout出来，创建成一个分支</div></pre></td></tr></table></figure>
+<p>分支合并和rebase</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git merge &lt;branch&gt;                  # 将branch分支合并到当前分支</div><div class="line">git merge origin/master --no-ff     # 不要Fast-Foward合并，这样可以生成merge提交</div><div class="line">git merge --no-commit &lt;branch&gt;      # 合并但不提交</div><div class="line">git merge --squash &lt;branch&gt;         # 把一条分支上的内容合并到另一个分支上的一个提交</div><div class="line"></div><div class="line">git rebase master &lt;branch&gt;          # 将master rebase到branch，相当于：</div><div class="line">git co &lt;branch&gt; &amp;&amp; git rebase master &amp;&amp; git co master &amp;&amp; git merge &lt;branch&gt;</div></pre></td></tr></table></figure>
+<p>Git补丁管理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git diff &gt; ../sync.patch         # 生成补丁</div><div class="line">git apply ../sync.patch          # 打补丁</div><div class="line">git apply --check ../sync.patch  # 测试补丁能否成功</div><div class="line">git format-patch -X              # 根据提交的log生成patch，X为数字，表示最近的几个日志</div></pre></td></tr></table></figure>
+<p>Git暂存管理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git stash                        # 暂存</div><div class="line">git stash list                   # 列所有stash</div><div class="line">git stash apply                  # 恢复暂存的内容</div><div class="line">git stash drop                   # 删除暂存区</div></pre></td></tr></table></figure>
+<p>Git远程分支管理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">git pull                         # 抓取远程仓库所有分支更新并合并到本地</div><div class="line">git pull --no-ff                 # 抓取远程仓库所有分支更新并合并到本地，不要快进合并</div><div class="line">git fetch origin                 # 抓取远程仓库所有更新</div><div class="line">git fetch origin remote-branch:local-branch #抓取remote-branch分支的更新</div><div class="line">git fetch origin --tags          # 抓取远程上的所有分支</div><div class="line">git checkout -b &lt;new-branch&gt; &lt;remote_tag&gt; # 抓取远程上的分支</div><div class="line">git merge origin/master          # 将远程主分支合并到本地当前分支</div><div class="line">git co --track origin/branch     # 跟踪某个远程分支创建相应的本地分支</div><div class="line">git co -b &lt;local_branch&gt; origin/&lt;remote_branch&gt;  # 基于远程分支创建本地分支，功能同上</div><div class="line"></div><div class="line">git push                         # push所有分支</div><div class="line">git push origin master           # 将本地主分支推到远程主分支</div><div class="line">git push -u origin master        # 将本地主分支推到远程(如无远程主分支则创建，用于初始化远程仓库)</div><div class="line">git push origin &lt;local_branch&gt;   # 创建远程分支， origin是远程仓库名</div><div class="line">git push origin &lt;local_branch&gt;:&lt;remote_branch&gt;  # 创建远程分支</div><div class="line">git push origin :&lt;remote_branch&gt;  #先删除本地分支(git br -d &lt;branch&gt;)，然后再push删除远程分支</div><div class="line"></div><div class="line">#### Git远程仓库管理</div><div class="line"></div><div class="line">```bash</div><div class="line">git remote -v                    # 查看远程服务器地址和仓库名称</div><div class="line">git remote show origin           # 查看远程服务器仓库状态</div><div class="line">git remote add origin git@github:XXX/test.git         # 添加远程仓库地址</div><div class="line">git remote set-url origin git@github.com:XXX/test.git # 设置远程仓库地址(用于修改远程仓库地址)</div><div class="line">git remote rm &lt;repository&gt;       # 删除远程仓库</div><div class="line">git remote set-head origin master   # 设置远程仓库的HEAD指向master分支</div><div class="line"></div><div class="line">git branch --set-upstream master origin/master</div><div class="line">git branch --set-upstream develop origin/develop</div></pre></td></tr></table></figure>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>打patch过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add .</div><div class="line">git status</div><div class="line">git diff --cached &gt;XXX.patch</div><div class="line">git ci -m &apos;add patch&apos;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/18/tmux/" rel="next" title="多终端管理器tmux使用详解">
+                <i class="fa fa-chevron-left"></i> 多终端管理器tmux使用详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/24/devops-tools/" rel="prev" title="运维人员必须熟悉的运维工具汇总">
+                运维人员必须熟悉的运维工具汇总 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/2382711"
+               alt="DW" />
+          <p class="site-author-name" itemprop="name">DW</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git配置"><span class="nav-number">1.</span> <span class="nav-text">Git配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git常用命令"><span class="nav-number">2.</span> <span class="nav-text">Git常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-本地分支管理"><span class="nav-number">3.</span> <span class="nav-text">Git 本地分支管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">4.</span> <span class="nav-text">实例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DW</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

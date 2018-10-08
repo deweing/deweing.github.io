@@ -1,0 +1,683 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="php" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="方法1: 简答的通过user-agent判断是否为手机访问 1234567891011121314151617181920&amp;lt;?phpfunction isMobile() &amp;#123;  //判断手机发送的客户端标志  if(isset($_SERVER[&amp;apos;HTTP_USER_AGENT&amp;apos;])) &amp;#123;    $userAgent = strtolower($_SE">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php判断是否为移动端浏览器">
+<meta property="og:url" content="http://deweing.github.io/2015/08/06/is-mobile-browser/index.html">
+<meta property="og:site_name" content="Hello World">
+<meta property="og:description" content="方法1: 简答的通过user-agent判断是否为手机访问 1234567891011121314151617181920&amp;lt;?phpfunction isMobile() &amp;#123;  //判断手机发送的客户端标志  if(isset($_SERVER[&amp;apos;HTTP_USER_AGENT&amp;apos;])) &amp;#123;    $userAgent = strtolower($_SE">
+<meta property="og:updated_time" content="2018-10-08T03:46:21.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php判断是否为移动端浏览器">
+<meta name="twitter:description" content="方法1: 简答的通过user-agent判断是否为手机访问 1234567891011121314151617181920&amp;lt;?phpfunction isMobile() &amp;#123;  //判断手机发送的客户端标志  if(isset($_SERVER[&amp;apos;HTTP_USER_AGENT&amp;apos;])) &amp;#123;    $userAgent = strtolower($_SE">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://deweing.github.io/2015/08/06/is-mobile-browser/"/>
+
+
+
+
+
+  <title> php判断是否为移动端浏览器 | Hello World </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello World</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://deweing.github.io/2015/08/06/is-mobile-browser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DW">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/2382711">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                php判断是否为移动端浏览器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-06T16:00:00+00:00">
+                2015-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>方法1</strong>: 简答的通过user-agent判断是否为手机访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">function isMobile() &#123;</div><div class="line">  //判断手机发送的客户端标志</div><div class="line">  if(isset($_SERVER[&apos;HTTP_USER_AGENT&apos;])) &#123;</div><div class="line">    $userAgent = strtolower($_SERVER[&apos;HTTP_USER_AGENT&apos;]);</div><div class="line">    $clientkeywords = array(</div><div class="line">      &apos;nokia&apos;, &apos;sony&apos;, &apos;ericsson&apos;, &apos;mot&apos;, &apos;samsung&apos;, &apos;htc&apos;, &apos;sgh&apos;, &apos;lg&apos;, &apos;sharp&apos;, &apos;sie-&apos;</div><div class="line">      ,&apos;philips&apos;, &apos;panasonic&apos;, &apos;alcatel&apos;, &apos;lenovo&apos;, &apos;iphone&apos;, &apos;ipod&apos;, &apos;blackberry&apos;, &apos;meizu&apos;,</div><div class="line">      &apos;android&apos;, &apos;netfront&apos;, &apos;symbian&apos;, &apos;ucweb&apos;, &apos;windowsce&apos;, &apos;palm&apos;, &apos;operamini&apos;,</div><div class="line">      &apos;operamobi&apos;, &apos;opera mobi&apos;, &apos;openwave&apos;, &apos;nexusone&apos;, &apos;cldc&apos;, &apos;midp&apos;, &apos;wap&apos;, &apos;mobile&apos;</div><div class="line">    );</div><div class="line">    // 从HTTP_USER_AGENT中查找手机浏览器的关键字</div><div class="line">    if(preg_match(&quot;/(&quot;.implode(&apos;|&apos;,$clientkeywords).&quot;)/i&quot;,$userAgent)&amp;&amp;strpos($userAgent,&apos;ipad&apos;) === false)</div><div class="line">    &#123;</div><div class="line">      return true;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return false;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p><strong>方法2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">function is_mobile()</div><div class="line">&#123;</div><div class="line">    // 如果有HTTP_X_WAP_PROFILE则一定是移动设备</div><div class="line">    if (isset ($_SERVER[&apos;HTTP_X_WAP_PROFILE&apos;]))</div><div class="line">    &#123;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    // 如果via信息含有wap则一定是移动设备,部分服务商会屏蔽该信息</div><div class="line">    if (isset ($_SERVER[&apos;HTTP_VIA&apos;]))</div><div class="line">    &#123;</div><div class="line">        // 找不到为flase,否则为true</div><div class="line">        return stristr($_SERVER[&apos;HTTP_VIA&apos;], &quot;wap&quot;) ? true : false;</div><div class="line">    &#125;</div><div class="line">    // 脑残法，判断手机发送的客户端标志,兼容性有待提高</div><div class="line">    if (isset ($_SERVER[&apos;HTTP_USER_AGENT&apos;]))</div><div class="line">    &#123;</div><div class="line">        $clientkeywords = array (</div><div class="line">            &apos;nokia&apos;,</div><div class="line">            &apos;sony&apos;,</div><div class="line">            &apos;ericsson&apos;,</div><div class="line">            &apos;mot&apos;,</div><div class="line">            &apos;samsung&apos;,</div><div class="line">            &apos;htc&apos;,</div><div class="line">            &apos;sgh&apos;,</div><div class="line">            &apos;lg&apos;,</div><div class="line">            &apos;sharp&apos;,</div><div class="line">            &apos;sie-&apos;,</div><div class="line">            &apos;philips&apos;,</div><div class="line">            &apos;panasonic&apos;,</div><div class="line">            &apos;alcatel&apos;,</div><div class="line">            &apos;lenovo&apos;,</div><div class="line">            &apos;iphone&apos;,</div><div class="line">            &apos;ipod&apos;,</div><div class="line">            &apos;blackberry&apos;,</div><div class="line">            &apos;meizu&apos;,</div><div class="line">            &apos;android&apos;,</div><div class="line">            &apos;netfront&apos;,</div><div class="line">            &apos;symbian&apos;,</div><div class="line">            &apos;ucweb&apos;,</div><div class="line">            &apos;windowsce&apos;,</div><div class="line">            &apos;palm&apos;,</div><div class="line">            &apos;operamini&apos;,</div><div class="line">            &apos;operamobi&apos;,</div><div class="line">            &apos;openwave&apos;,</div><div class="line">            &apos;nexusone&apos;,</div><div class="line">            &apos;cldc&apos;,</div><div class="line">            &apos;midp&apos;,</div><div class="line">            &apos;wap&apos;,</div><div class="line">            &apos;mobile&apos;,</div><div class="line">            &apos;mobi&apos;,</div><div class="line">            &apos;kindle&apos;,</div><div class="line">            &apos;opera mini&apos;,</div><div class="line">            &apos;opera&apos;,</div><div class="line">            );</div><div class="line">        // 从HTTP_USER_AGENT中查找手机浏览器的关键字</div><div class="line">        if (preg_match(&quot;/(&quot; . implode(&apos;|&apos;, $clientkeywords) . &quot;)/i&quot;, strtolower($_SERVER[&apos;HTTP_USER_AGENT&apos;])))</div><div class="line">        &#123;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    // 协议法，因为有可能不准确，放到最后判断</div><div class="line">    if (isset ($_SERVER[&apos;HTTP_ACCEPT&apos;]))</div><div class="line">    &#123;</div><div class="line">        // 如果只支持wml并且不支持html那一定是移动设备</div><div class="line">        // 如果支持wml和html但是wml在html之前则是移动设备</div><div class="line">        if ((strpos($_SERVER[&apos;HTTP_ACCEPT&apos;], &apos;vnd.wap.wml&apos;) !== false) &amp;&amp; (strpos($_SERVER[&apos;HTTP_ACCEPT&apos;], &apos;text/html&apos;) === false || (strpos($_SERVER[&apos;HTTP_ACCEPT&apos;], &apos;vnd.wap.wml&apos;) &lt; strpos($_SERVER[&apos;HTTP_ACCEPT&apos;], &apos;text/html&apos;))))</div><div class="line">        &#123;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p><strong>方法3</strong>：下面是一个从PHP框架剥离的判断是否为手机移动终端的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">function is_mobile_request()</div><div class="line">&#123;</div><div class="line">    $_SERVER[&apos;ALL_HTTP&apos;] = isset($_SERVER[&apos;ALL_HTTP&apos;]) ? $_SERVER[&apos;ALL_HTTP&apos;] : &apos;&apos;;</div><div class="line">    $mobile_browser = &apos;0&apos;;</div><div class="line"></div><div class="line">    if(preg_match(&apos;/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|iphone|ipad|ipod|android|xoom)/i&apos;, strtolower($_SERVER[&apos;HTTP_USER_AGENT&apos;])))</div><div class="line">        $mobile_browser++;</div><div class="line">    if((isset($_SERVER[&apos;HTTP_ACCEPT&apos;])) and (strpos(strtolower($_SERVER[&apos;HTTP_ACCEPT&apos;]),&apos;application/vnd.wap.xhtml+xml&apos;) !== false))</div><div class="line">        $mobile_browser++;</div><div class="line">    if(isset($_SERVER[&apos;HTTP_X_WAP_PROFILE&apos;]))</div><div class="line">        $mobile_browser++;</div><div class="line">    if(isset($_SERVER[&apos;HTTP_PROFILE&apos;]))</div><div class="line">        $mobile_browser++;</div><div class="line"></div><div class="line">    $mobile_ua = strtolower(substr($_SERVER[&apos;HTTP_USER_AGENT&apos;],0,4));</div><div class="line">    $mobile_agents = array(</div><div class="line">        &apos;w3c &apos;,&apos;acs-&apos;,&apos;alav&apos;,&apos;alca&apos;,&apos;amoi&apos;,&apos;audi&apos;,&apos;avan&apos;,&apos;benq&apos;,&apos;bird&apos;,&apos;blac&apos;,</div><div class="line">        &apos;blaz&apos;,&apos;brew&apos;,&apos;cell&apos;,&apos;cldc&apos;,&apos;cmd-&apos;,&apos;dang&apos;,&apos;doco&apos;,&apos;eric&apos;,&apos;hipt&apos;,&apos;inno&apos;,</div><div class="line">        &apos;ipaq&apos;,&apos;java&apos;,&apos;jigs&apos;,&apos;kddi&apos;,&apos;keji&apos;,&apos;leno&apos;,&apos;lg-c&apos;,&apos;lg-d&apos;,&apos;lg-g&apos;,&apos;lge-&apos;,</div><div class="line">        &apos;maui&apos;,&apos;maxo&apos;,&apos;midp&apos;,&apos;mits&apos;,&apos;mmef&apos;,&apos;mobi&apos;,&apos;mot-&apos;,&apos;moto&apos;,&apos;mwbp&apos;,&apos;nec-&apos;,</div><div class="line">        &apos;newt&apos;,&apos;noki&apos;,&apos;oper&apos;,&apos;palm&apos;,&apos;pana&apos;,&apos;pant&apos;,&apos;phil&apos;,&apos;play&apos;,&apos;port&apos;,&apos;prox&apos;,</div><div class="line">        &apos;qwap&apos;,&apos;sage&apos;,&apos;sams&apos;,&apos;sany&apos;,&apos;sch-&apos;,&apos;sec-&apos;,&apos;send&apos;,&apos;seri&apos;,&apos;sgh-&apos;,&apos;shar&apos;,</div><div class="line">        &apos;sie-&apos;,&apos;siem&apos;,&apos;smal&apos;,&apos;smar&apos;,&apos;sony&apos;,&apos;sph-&apos;,&apos;symb&apos;,&apos;t-mo&apos;,&apos;teli&apos;,&apos;tim-&apos;,</div><div class="line">        &apos;tosh&apos;,&apos;tsm-&apos;,&apos;upg1&apos;,&apos;upsi&apos;,&apos;vk-v&apos;,&apos;voda&apos;,&apos;wap-&apos;,&apos;wapa&apos;,&apos;wapi&apos;,&apos;wapp&apos;,</div><div class="line">        &apos;wapr&apos;,&apos;webc&apos;,&apos;winw&apos;,&apos;winw&apos;,&apos;xda&apos;,&apos;xda-&apos;</div><div class="line">    );</div><div class="line"></div><div class="line">    if(in_array($mobile_ua, $mobile_agents))</div><div class="line">        $mobile_browser++;</div><div class="line">    if(strpos(strtolower($_SERVER[&apos;ALL_HTTP&apos;]), &apos;operamini&apos;) !== false)</div><div class="line">        $mobile_browser++;</div><div class="line">    if(strpos(strtolower($_SERVER[&apos;HTTP_USER_AGENT&apos;]), &apos;windows&apos;) !== false)</div><div class="line">        $mobile_browser=0;</div><div class="line">    if(strpos(strtolower($_SERVER[&apos;HTTP_USER_AGENT&apos;]), &apos;windows phone&apos;) !== false)</div><div class="line">        $mobile_browser++;</div><div class="line">    if($mobile_browser&gt;0)</div><div class="line">        return true;</div><div class="line">    else</div><div class="line">        return false;</div><div class="line">&#125;</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/php/" rel="tag"># php</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/24/ubuntu1404-sources/" rel="next" title="ubuntu14.04 下载源">
+                <i class="fa fa-chevron-left"></i> ubuntu14.04 下载源
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/07/ten-javascript-questions/" rel="prev" title="十个JavaScript问题">
+                十个JavaScript问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/2382711"
+               alt="DW" />
+          <p class="site-author-name" itemprop="name">DW</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DW</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

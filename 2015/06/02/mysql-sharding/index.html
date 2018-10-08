@@ -1,0 +1,697 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="垂直分表 垂直分表就是一个包含有很多列的表拆分成多个表，比如表A包含20个字段，现在拆分成表A1和A2，两个表各十个字段（具体如何拆根据业务来选择）。 优势：在高并发的情境下，可以减少表锁和行锁的次数。 劣势：在数据记录非常大的情况下，读写速度还是会遇到瓶颈。 水平分表 假如某个网站，它的数据库的某个表已经达到了上亿条记录，那么此时如果通过select去查询，在没有索引的情况下，他的查询会非常慢，">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL分表分区">
+<meta property="og:url" content="http://deweing.github.io/2015/06/02/mysql-sharding/index.html">
+<meta property="og:site_name" content="Hello World">
+<meta property="og:description" content="垂直分表 垂直分表就是一个包含有很多列的表拆分成多个表，比如表A包含20个字段，现在拆分成表A1和A2，两个表各十个字段（具体如何拆根据业务来选择）。 优势：在高并发的情境下，可以减少表锁和行锁的次数。 劣势：在数据记录非常大的情况下，读写速度还是会遇到瓶颈。 水平分表 假如某个网站，它的数据库的某个表已经达到了上亿条记录，那么此时如果通过select去查询，在没有索引的情况下，他的查询会非常慢，">
+<meta property="og:updated_time" content="2018-10-08T03:46:21.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL分表分区">
+<meta name="twitter:description" content="垂直分表 垂直分表就是一个包含有很多列的表拆分成多个表，比如表A包含20个字段，现在拆分成表A1和A2，两个表各十个字段（具体如何拆根据业务来选择）。 优势：在高并发的情境下，可以减少表锁和行锁的次数。 劣势：在数据记录非常大的情况下，读写速度还是会遇到瓶颈。 水平分表 假如某个网站，它的数据库的某个表已经达到了上亿条记录，那么此时如果通过select去查询，在没有索引的情况下，他的查询会非常慢，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://deweing.github.io/2015/06/02/mysql-sharding/"/>
+
+
+
+
+
+  <title> MySQL分表分区 | Hello World </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello World</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://deweing.github.io/2015/06/02/mysql-sharding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DW">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/2382711">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL分表分区
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-06-02T16:00:00+00:00">
+                2015-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>垂直分表</strong></p>
+<p>垂直分表就是一个包含有很多列的表拆分成多个表，比如表A包含20个字段，现在拆分成表A1和A2，两个表各十个字段（具体如何拆根据业务来选择）。</p>
+<p>优势：在高并发的情境下，可以减少表锁和行锁的次数。</p>
+<p>劣势：在数据记录非常大的情况下，读写速度还是会遇到瓶颈。</p>
+<p><strong>水平分表</strong></p>
+<p>假如某个网站，它的数据库的某个表已经达到了上亿条记录，那么此时如果通过select去查询，在没有索引的情况下，他的查询会非常慢，那么就可以通过hash算法将这个表分成10个子表（此时每个表的 的数据量只有1000万条了）。同时生成一个总表，记录各个子表的信息，假如查询一条id=100的记录，它不再需要全表扫描，而是通过总表找到该记录在哪个对应的子表上，然后再去相应的表做检索，这样就降低了IO压力。</p>
+<p>劣势：会给前端程序应用程序的SQL代码的维护带来很大的麻烦，这时候可以使用MySQL的Merge存储引擎实现分表。</p>
+<p>用Merge存储引擎分表，对应用程序的SQL语句来说是透明的，不需要修改任何代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE t1 (  a INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  message CHAR(20));</div><div class="line">CREATE TABLE t2 (  a INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  message CHAR(20));</div><div class="line"></div><div class="line">INSERT INTO t1 (message) VALUES (&apos;Testing&apos;),(&apos;table&apos;),(&apos;t1&apos;);</div><div class="line">INSERT INTO t2 (message) VALUES (&apos;Testing&apos;),(&apos;table&apos;),(&apos;t2&apos;);</div><div class="line"></div><div class="line">CREATE TABLE total (a INT NOT NULL AUTO_INCREMENT PRIMARY KEY, message CHAR(20)) ENGINE=MERGE  UNION=(t1,t2) INSERT_METHOD=LAST;</div></pre></td></tr></table></figure>
+<p>实际上merge存储引擎是一个虚拟的表，对应的实际表必须是myisam类型的表，如果你的mysql是5.1以上版本，默认数据库使用的事InnoDB存储引擎的，所以在创建total时，t1和t2表必须是myisam存储引擎的。</p>
+<p>如果需要定期增加分表，只需要修改merge表的union即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE t3(  a INT NOT NULL AUTO_INCREMENT PRIMARY KEY,  message CHAR(20));</div><div class="line">ALTER TABLE total  UNION=(t1,t2,t3)</div></pre></td></tr></table></figure>
+<p><strong>横向分区</strong></p>
+<p>举例说明：假如有100W条数据，分成十份，前10W条数据放到第一个分区，第二个10W条数据放到第二个分区，依此类推。取出一条数据的时候，这条数据包含了表结构中的所有字段，横向分区并没有改变表的结构。</p>
+<p>分区表分为RANGE,LIST,HASH,KEY四种类型,并且分区表的索引是可以局部针对分区表建立的<br>创建分区表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE sales (   </div><div class="line">    id INT AUTO_INCREMENT,   </div><div class="line">    amount DOUBLE NOT NULL,   </div><div class="line">    order_day DATETIME NOT NULL,   </div><div class="line">    PRIMARY KEY(id, order_day)   </div><div class="line">) ENGINE=Innodb PARTITION BY RANGE(YEAR(order_day)) (   </div><div class="line">    PARTITION p_2010 VALUES LESS THAN (2010),   </div><div class="line">    PARTITION p_2011 VALUES LESS THAN (2011),   </div><div class="line">    PARTITION p_2012 VALUES LESS THAN (2012),   </div><div class="line">    PARTITION p_catchall VALUES LESS THAN MAXVALUE);</div></pre></td></tr></table></figure>
+<p><strong>纵向分区</strong></p>
+<p>举例说明：在设计用户表的时候，开始的时候没有考虑好，而把个人的所有信息都放到了一张表里面去，这个表里面就会有比较大的字段，如个人简介，而这些简介呢，也许不会有好多人去看，所以等到有人要看的时候，再去查找，分表的时候，可以把这样的大字段，分开来</p>
+<p>完整的一张表，都对应三个文件，一个.MYD数据文件，.MYI索引文件，.frm表结构文件。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/24/regex-expression/" rel="next" title="常用正则表达式">
+                <i class="fa fa-chevron-left"></i> 常用正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/16/javascript-questions/" rel="prev" title="一道经典的JavaScript试题">
+                一道经典的JavaScript试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/2382711"
+               alt="DW" />
+          <p class="site-author-name" itemprop="name">DW</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DW</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

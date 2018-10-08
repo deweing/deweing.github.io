@@ -1,0 +1,702 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mycat" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="1.在server.xml中，将sequnceHandlerType设置为1 1&amp;lt;property name=&quot;sequnceHandlerType&quot;&amp;gt;1&amp;lt;/property&amp;gt; 2.在schema.xml中，table中增加属性autoIncrement值为true，添加mycat_sequence表 123456&amp;lt;schema name=&quot;TESTDB&quot; check">
+<meta name="keywords" content="mycat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mycat自增主键设置">
+<meta property="og:url" content="http://deweing.github.io/2016/06/28/mycat-auto-increment/index.html">
+<meta property="og:site_name" content="Hello World">
+<meta property="og:description" content="1.在server.xml中，将sequnceHandlerType设置为1 1&amp;lt;property name=&quot;sequnceHandlerType&quot;&amp;gt;1&amp;lt;/property&amp;gt; 2.在schema.xml中，table中增加属性autoIncrement值为true，添加mycat_sequence表 123456&amp;lt;schema name=&quot;TESTDB&quot; check">
+<meta property="og:updated_time" content="2018-10-08T03:52:44.777Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mycat自增主键设置">
+<meta name="twitter:description" content="1.在server.xml中，将sequnceHandlerType设置为1 1&amp;lt;property name=&quot;sequnceHandlerType&quot;&amp;gt;1&amp;lt;/property&amp;gt; 2.在schema.xml中，table中增加属性autoIncrement值为true，添加mycat_sequence表 123456&amp;lt;schema name=&quot;TESTDB&quot; check">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://deweing.github.io/2016/06/28/mycat-auto-increment/"/>
+
+
+
+
+
+  <title> Mycat自增主键设置 | Hello World </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello World</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://deweing.github.io/2016/06/28/mycat-auto-increment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DW">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/2382711">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mycat自增主键设置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-28T16:00:00+00:00">
+                2016-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>1.在server.xml中，将sequnceHandlerType设置为1</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sequnceHandlerType"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>2.在schema.xml中，table中增加属性autoIncrement值为true，添加mycat_sequence表</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">schema</span> <span class="attr">name</span>=<span class="string">"TESTDB"</span> <span class="attr">checkSQLschema</span>=<span class="string">"false"</span> <span class="attr">sqlMaxLimit</span>=<span class="string">"100"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- random sharding using mod sharind rule --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- autoIncrement="true" 属性--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">name</span>=<span class="string">"tt2"</span> <span class="attr">primaryKey</span>=<span class="string">"id"</span> <span class="attr">autoIncrement</span>=<span class="string">"true"</span> <span class="attr">dataNode</span>=<span class="string">"dn1,dn2,dn3,dn4,dn5"</span> <span class="attr">rule</span>=<span class="string">"mod-long"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table</span> <span class="attr">name</span>=<span class="string">"mycat_sequence"</span> <span class="attr">primaryKey</span>=<span class="string">"name"</span> <span class="attr">dataNode</span>=<span class="string">"dn1"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">schema</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>3.在sequence_db_conf.properties中，依赖全局序列，增加序列，与table名称相同全大写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TT2=dn1</div></pre></td></tr></table></figure>
+<p>4.创建mycat_sequence表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> MYCAT_SEQUENCE;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> MYCAT_SEQUENCE(</div><div class="line">    <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">    current_value <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">    <span class="keyword">increment</span> <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">100</span>,</div><div class="line">    PRIMARY <span class="keyword">KEY</span>(<span class="keyword">name</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>name：sequence名称</li>
+<li>currenct_value：当前value</li>
+<li>increment：增长步长<br>注：MYCAT_SEQUENCE必须大写</li>
+</ul>
+<p>5.插入sequence记录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> MYCAT_SEQUENCE(<span class="keyword">name</span>, current_value, <span class="keyword">increment</span>) <span class="keyword">VALUES</span> (<span class="string">'TT2'</span>, <span class="number">1</span>, <span class="number">100</span>);</div></pre></td></tr></table></figure>
+<p>6.创建存储函数，必须在同一个数据库中创建</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 获取当前sequence的值 (返回当前值,增量)</span></div><div class="line"><span class="keyword">DROP</span> <span class="keyword">FUNCTION</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> mycat_seq_currval;</div><div class="line">DELIMITER $</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> mycat_seq_currval(seq_name <span class="built_in">VARCHAR</span>(<span class="number">50</span>)) <span class="keyword">RETURNS</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">CHARSET</span> utf8</div><div class="line"><span class="keyword">DETERMINISTIC</span></div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> retval <span class="built_in">VARCHAR</span>(<span class="number">64</span>);</div><div class="line"><span class="keyword">SET</span> retval=<span class="string">"-999999999,null"</span>;</div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">concat</span>(<span class="keyword">CAST</span>(current_value <span class="keyword">AS</span> <span class="built_in">CHAR</span>),<span class="string">","</span>,<span class="keyword">CAST</span>(<span class="keyword">increment</span> <span class="keyword">AS</span> <span class="built_in">CHAR</span>)) <span class="keyword">INTO</span> retval <span class="keyword">FROM</span> MYCAT_SEQUENCE <span class="keyword">WHERE</span> <span class="keyword">name</span> = seq_name;</div><div class="line">RETURN retval;</div><div class="line"><span class="keyword">END</span> $</div><div class="line">DELIMITER ;</div><div class="line"></div><div class="line"><span class="comment">-- 设置sequence值</span></div><div class="line"><span class="keyword">DROP</span> <span class="keyword">FUNCTION</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> mycat_seq_setval;</div><div class="line">DELIMITER $</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> mycat_seq_setval(seq_name <span class="built_in">VARCHAR</span>(<span class="number">50</span>),<span class="keyword">value</span> <span class="built_in">INTEGER</span>) <span class="keyword">RETURNS</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">CHARSET</span> utf8</div><div class="line"><span class="keyword">DETERMINISTIC</span></div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">UPDATE</span> MYCAT_SEQUENCE</div><div class="line"><span class="keyword">SET</span> current_value = <span class="keyword">value</span></div><div class="line"><span class="keyword">WHERE</span> <span class="keyword">name</span> = seq_name;</div><div class="line">RETURN mycat_seq_currval(seq_name);</div><div class="line"><span class="keyword">END</span> $</div><div class="line">DELIMITER ;</div><div class="line"></div><div class="line"><span class="comment">-- 获取下一个sequence值</span></div><div class="line"><span class="keyword">DROP</span> <span class="keyword">FUNCTION</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> mycat_seq_nextval;</div><div class="line">DELIMITER $</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> mycat_seq_nextval(seq_name <span class="built_in">VARCHAR</span>(<span class="number">50</span>)) <span class="keyword">RETURNS</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">CHARSET</span> utf8</div><div class="line"><span class="keyword">DETERMINISTIC</span></div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">UPDATE</span> MYCAT_SEQUENCE</div><div class="line"><span class="keyword">SET</span> current_value = current_value + <span class="keyword">increment</span> <span class="keyword">WHERE</span> <span class="keyword">name</span> = seq_name;</div><div class="line">RETURN mycat_seq_currval(seq_name);</div><div class="line"><span class="keyword">END</span> $</div><div class="line">DELIMITER ;</div></pre></td></tr></table></figure>
+<p>7.在mysql中定义自增主键</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`tt2`</span> (</div><div class="line">  <span class="string">`id`</span> <span class="built_in">INT</span>(<span class="number">10</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">  <span class="string">`nm`</span> <span class="built_in">INT</span>(<span class="number">10</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</div><div class="line">) <span class="keyword">ENGINE</span>=MYISAM AUTO_INCREMENT=<span class="number">6</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</div></pre></td></tr></table></figure>
+<p>8.插入记录</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tt2(nm) <span class="keyword">values</span> (<span class="number">99</span>);</div></pre></td></tr></table></figure>
+<p>FROM:<br>1.<a href="https://github.com/MyCATApache/Mycat-doc/blob/master/MyCAT%E8%87%AA%E5%A2%9E%E5%AD%97%E6%AE%B5%E5%92%8C%E8%BF%94%E5%9B%9E%E7%94%9F%E6%88%90%E7%9A%84%E4%B8%BB%E9%94%AEID%E7%9A%84%E7%BB%8F%E9%AA%8C%E5%88%86%E4%BA%AB" target="_blank" rel="external">MyCAT自增字段和返回生成的主键ID的经验分享</a><br>2.<a href="http://valleylord.github.io/post/201603-mycat-perf-test/" target="_blank" rel="external">MyCAT 性能测试</a><br>3.<a href="http://www.songwie.com/articlelist/68" target="_blank" rel="external">mycat分布式mysql中间件（自增主键）</a><br>4.<a href="http://www.cnblogs.com/ivictor/p/5235147.html" target="_blank" rel="external">MyCAT全局序列号</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/mycat/" rel="tag"># mycat</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/01/docker-shipyard/" rel="next" title="Docker管理工具Shipyard">
+                <i class="fa fa-chevron-left"></i> Docker管理工具Shipyard
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/28/mycat-install-log/" rel="prev" title="Mycat安装配置记录">
+                Mycat安装配置记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/2382711"
+               alt="DW" />
+          <p class="site-author-name" itemprop="name">DW</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DW</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

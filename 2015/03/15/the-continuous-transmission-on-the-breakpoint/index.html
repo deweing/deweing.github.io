@@ -1,0 +1,689 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="linux" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="通常情况下，Web服务器(如Apache)会默认开启对断点续传的支持。因此，如果直接通过Web服务器来提供文件的下载，可以不必做特别的配置，即可享受到断点续传的好处。断点续传是在发起HTTP请求的时候加入RANGE头来告诉服务器客户端已经下载了多少字节。等所有这些请求都返回之后，再把得到的内容一块一块的拼接起来得到完整的资源。 1.判断服务器是否支持断点续传 12wget -S http://ww">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="判断服务器是否支持断点续传">
+<meta property="og:url" content="http://deweing.github.io/2015/03/15/the-continuous-transmission-on-the-breakpoint/index.html">
+<meta property="og:site_name" content="Hello World">
+<meta property="og:description" content="通常情况下，Web服务器(如Apache)会默认开启对断点续传的支持。因此，如果直接通过Web服务器来提供文件的下载，可以不必做特别的配置，即可享受到断点续传的好处。断点续传是在发起HTTP请求的时候加入RANGE头来告诉服务器客户端已经下载了多少字节。等所有这些请求都返回之后，再把得到的内容一块一块的拼接起来得到完整的资源。 1.判断服务器是否支持断点续传 12wget -S http://ww">
+<meta property="og:updated_time" content="2018-10-08T03:46:21.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="判断服务器是否支持断点续传">
+<meta name="twitter:description" content="通常情况下，Web服务器(如Apache)会默认开启对断点续传的支持。因此，如果直接通过Web服务器来提供文件的下载，可以不必做特别的配置，即可享受到断点续传的好处。断点续传是在发起HTTP请求的时候加入RANGE头来告诉服务器客户端已经下载了多少字节。等所有这些请求都返回之后，再把得到的内容一块一块的拼接起来得到完整的资源。 1.判断服务器是否支持断点续传 12wget -S http://ww">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://deweing.github.io/2015/03/15/the-continuous-transmission-on-the-breakpoint/"/>
+
+
+
+
+
+  <title> 判断服务器是否支持断点续传 | Hello World </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hello World</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://deweing.github.io/2015/03/15/the-continuous-transmission-on-the-breakpoint/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DW">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/2382711">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                判断服务器是否支持断点续传
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-03-15T16:00:00+00:00">
+                2015-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>通常情况下，Web服务器(如Apache)会默认开启对断点续传的支持。因此，如果直接通过Web服务器来提供文件的下载，可以不必做特别的配置，即可享受到断点续传的好处。断点续传是在发起HTTP请求的时候加入RANGE头来告诉服务器客户端已经下载了多少字节。等所有这些请求都返回之后，再把得到的内容一块一块的拼接起来得到完整的资源。</p>
+<p>1.判断服务器是否支持断点续传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget -S http://www.example.com/test.zip 2&gt;&amp;1 | grep &apos;Accept-Ranges&apos;</div><div class="line"> Accept-Ranges: bytes</div></pre></td></tr></table></figure>
+<p>输出结果 Accept-Ranges: bytes ，说明服务器支持按字节下载。</p>
+<p>2.curl 命令发送字节范围下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -–range 0-99 http://www.example.com/test.zip &gt; t.zip</div></pre></td></tr></table></figure>
+<p>3.FileDownload.class.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div></pre></td><td class="code"><pre><div class="line">&lt;?php  </div><div class="line"></div><div class="line">class FileDownload&#123; </div><div class="line">  </div><div class="line">    private $_speed = 512;  </div><div class="line">  </div><div class="line">  </div><div class="line">    /** 下载 </div><div class="line">    * @param String  $file   要下载的文件路径 </div><div class="line">    * @param String  $name   文件名称,为空则与下载的文件名称一样 </div><div class="line">    * @param boolean $reload 是否开启断点续传 </div><div class="line">    */  </div><div class="line">    public function download($file, $name=&apos;&apos;, $reload=false)</div><div class="line">    &#123;  </div><div class="line">        if(file_exists($file))</div><div class="line">        &#123;  </div><div class="line">            if($name==&apos;&apos;)</div><div class="line">            &#123;  </div><div class="line">                $name = basename($file);  </div><div class="line">            &#125;  </div><div class="line">  </div><div class="line">            $fp = fopen($file, &apos;rb&apos;);  </div><div class="line">            $file_size = filesize($file);  </div><div class="line">            $ranges = $this-&gt;getRange($file_size);  </div><div class="line">  </div><div class="line">            header(&apos;cache-control:public&apos;);  </div><div class="line">            header(&apos;content-type:application/octet-stream&apos;);  </div><div class="line">            header(&apos;content-disposition:attachment; filename=&apos;.$name);  </div><div class="line">  </div><div class="line">            if($reload &amp;&amp; $ranges!=null)</div><div class="line">            &#123; // 使用续传  </div><div class="line">                header(&apos;HTTP/1.1 206 Partial Content&apos;);  </div><div class="line">                header(&apos;Accept-Ranges:bytes&apos;);  </div><div class="line">      </div><div class="line">                // 剩余长度  </div><div class="line">                header(sprintf(&apos;content-length:%u&apos;,$ranges[&apos;end&apos;]-$ranges[&apos;start&apos;]));  </div><div class="line">      </div><div class="line">                // range信息  </div><div class="line">                header(sprintf(&apos;content-range:bytes %s-%s/%s&apos;, $ranges[&apos;start&apos;], $ranges[&apos;end&apos;], $file_size));  </div><div class="line">      </div><div class="line">                // fp指针跳到断点位置  </div><div class="line">                fseek($fp, sprintf(&apos;%u&apos;, $ranges[&apos;start&apos;]));  </div><div class="line">            &#125;else&#123;  </div><div class="line">                header(&apos;HTTP/1.1 200 OK&apos;);  </div><div class="line">                header(&apos;content-length:&apos;.$file_size);  </div><div class="line">            &#125;  </div><div class="line">  </div><div class="line">            while(!feof($fp))</div><div class="line">            &#123;  </div><div class="line">                echo fread($fp, round($this-&gt;_speed*1024,0));  </div><div class="line">                ob_flush();  </div><div class="line">                //sleep(1); // 用于测试,减慢下载速度  </div><div class="line">            &#125;  </div><div class="line">      </div><div class="line">            ($fp!=null) &amp;&amp; fclose($fp);  </div><div class="line">      </div><div class="line">        &#125;else&#123;  </div><div class="line">            return &apos;&apos;;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">  </div><div class="line">    /** 设置下载速度 </div><div class="line">    * @param int $speed </div><div class="line">    */  </div><div class="line">    public function setSpeed($speed)</div><div class="line">    &#123;  </div><div class="line">        if(is_numeric($speed) &amp;&amp; $speed&gt;16 &amp;&amp; $speed&lt;4096)</div><div class="line">        &#123;  </div><div class="line">            $this-&gt;_speed = $speed;  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">  </div><div class="line">    /** 获取header range信息 </div><div class="line">    * @param  int   $file_size 文件大小 </div><div class="line">    * @return Array </div><div class="line">    */  </div><div class="line">    private function getRange($file_size)</div><div class="line">    &#123;  </div><div class="line">        if(isset($_SERVER[&apos;HTTP_RANGE&apos;]) &amp;&amp; !empty($_SERVER[&apos;HTTP_RANGE&apos;]))</div><div class="line">        &#123;  </div><div class="line">            $range = $_SERVER[&apos;HTTP_RANGE&apos;];  </div><div class="line">            $range = preg_replace(&apos;/[\s|,].*/&apos;, &apos;&apos;, $range);  </div><div class="line">            $range = explode(&apos;-&apos;, substr($range, 6));  </div><div class="line">            if(count($range)&lt;2)</div><div class="line">            &#123;  </div><div class="line">                $range[1] = $file_size;  </div><div class="line">            &#125;  </div><div class="line">            $range = array_combine(array(&apos;start&apos;,&apos;end&apos;), $range);  </div><div class="line">            if(empty($range[&apos;start&apos;]))</div><div class="line">            &#123;  </div><div class="line">                $range[&apos;start&apos;] = 0;  </div><div class="line">            &#125;  </div><div class="line">            if(empty($range[&apos;end&apos;]))</div><div class="line">            &#123;  </div><div class="line">                $range[&apos;end&apos;] = $file_size;  </div><div class="line">            &#125;  </div><div class="line">            return $range;  </div><div class="line">        &#125;  </div><div class="line">        return null;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">&#125; // class end  </div><div class="line">  </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>demo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php  </div><div class="line">    require(&apos;FileDownload.class.php&apos;);  </div><div class="line">    $file = &apos;book.zip&apos;;  </div><div class="line">    $name = time().&apos;.zip&apos;;  </div><div class="line">    $obj = new FileDownload();  </div><div class="line">    $flag = $obj-&gt;download($file, $name);  </div><div class="line">    //$flag = $obj-&gt;download($file, $name, true); // 断点续传  </div><div class="line">      </div><div class="line">    if(!$flag)&#123;  </div><div class="line">        echo &apos;file not exists&apos;;  </div><div class="line">    &#125;  </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>4.Discuz!论坛软件的attachment.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$range = 0; </div><div class="line">if($readmod == 4) </div><div class="line">&#123; </div><div class="line">    dheader(&apos;Accept-Ranges: bytes&apos;); </div><div class="line">    if(!emptyempty($_SERVER[&apos;HTTP_RANGE&apos;])) </div><div class="line">    &#123; </div><div class="line">        list($range) = explode(&apos;-&apos;,(str_replace(&apos;bytes=&apos;, &apos;&apos;, $_SERVER[&apos;HTTP_RANGE&apos;]))); </div><div class="line">        $rangesize = ($filesize - $range) &gt; 0 ? ($filesize - $range) : 0; </div><div class="line">        dheader(&apos;Content-Length: &apos;.$rangesize); </div><div class="line">        dheader(&apos;HTTP/1.1 206 Partial Content&apos;); </div><div class="line">        dheader(&apos;Content-Range: bytes=&apos;.$range.&apos;-&apos;.($filesize-1).&apos;/&apos;.($filesize)); </div><div class="line">    &#125; </div><div class="line">&#125;  </div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/03/11/some-resources-on-the-netwrok-share/" rel="next" title="网络上分享的一些资源">
+                <i class="fa fa-chevron-left"></i> 网络上分享的一些资源
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/22/mysql-copy-table/" rel="prev" title="Mysql复制表(表结构、索引、数据)">
+                Mysql复制表(表结构、索引、数据) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars1.githubusercontent.com/u/2382711"
+               alt="DW" />
+          <p class="site-author-name" itemprop="name">DW</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DW</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
